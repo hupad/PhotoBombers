@@ -7,12 +7,31 @@
 //
 
 #import "TAAppDelegate.h"
+#import "TAPhotosViewController.h"
+#import "SimpleAuth.h"
 
 @implementation TAAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    SimpleAuth.configuration[@"instagram"] = @{
+                                               @"client_id" : @"beb8bf1689bb475aa08104c0a3ee6c70",
+                                               SimpleAuthRedirectURIKey : @"photobombers://auth/instagram"
+                                               };
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    TAPhotosViewController *photosViewController = [[TAPhotosViewController alloc] init];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController: photosViewController];
+    
+    UINavigationBar *navBar = navController.navigationBar;
+    
+    navBar.barTintColor = [UIColor colorWithRed:242.0 / 255.0 green:122.0 / 255.0 blue:87.0 / 255.0 alpha:1.0];
+    navBar.barStyle = UIBarStyleBlackOpaque;
+    
+    self.window.rootViewController = navController;
+    
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
