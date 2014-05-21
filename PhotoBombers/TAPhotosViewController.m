@@ -10,8 +10,10 @@
 #import "TAPhotoCell.h"
 #import "SimpleAuth.h"
 #import "TADetailViewController.h"
+#import "TAPresentDetailTransition.h"
+#import "TADismissDetailTransition.h"
 
-@interface TAPhotosViewController ()
+@interface TAPhotosViewController () <UIViewControllerTransitioningDelegate>
 
 @property (nonatomic)NSArray *photos;
 @property (nonatomic)NSString *accessToken;
@@ -102,11 +104,22 @@
     NSDictionary *photo = self.photos[indexPath.row];
     
     TADetailViewController *detailVC = [[TADetailViewController alloc] init];
+    detailVC.modalPresentationStyle = UIModalPresentationCustom;
+    detailVC.transitioningDelegate = self;
     
     detailVC.photo = photo;
     
     [self presentViewController:detailVC animated:YES
                      completion:nil];
+}
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
+    
+    return [[TAPresentDetailTransition alloc] init];
+}
+
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+    
+    return [[TADismissDetailTransition alloc] init];
 }
 
 @end

@@ -21,7 +21,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.95];
     
     
     self.imageView = [[UIImageView alloc] init];
@@ -34,14 +34,17 @@
     [self tapGesture];
 }
 
--(void)viewDidLayoutSubviews{
+- (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    CGSize size = self.view.frame.size;
-    CGSize imageSize = CGSizeMake(size.width, size.height);
+    // View controller's view's size
+    CGSize size = self.view.bounds.size;
     
-    self.imageView.frame = CGRectMake(0, (size.height - imageSize.height)/2, imageSize.width, imageSize.height);
+    // Image view's size
+    CGSize imageSize = CGSizeMake(size.width, size.width);
     
+    // Image view's frame               (self.view's height - self.imageView height) / 2
+    self.imageView.frame = CGRectMake(0.0, (size.height - imageSize.height) / 2.0, imageSize.width, imageSize.height);
 }
 
 -(void)tapGesture{
